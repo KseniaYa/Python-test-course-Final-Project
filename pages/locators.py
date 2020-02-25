@@ -5,7 +5,6 @@ class MainPageLocators():
     LINK = "http://selenium1py.pythonanywhere.com/"
 
 class LoginPageLocators():
-    LINK = "http://selenium1py.pythonanywhere.com/fr/accounts/login/"
     LOGIN_FORM = (By.ID, "login_form")
     REGISTER_FORM = (By.ID, "register_form")
     
