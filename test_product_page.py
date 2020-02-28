@@ -1,5 +1,6 @@
 import pytest
 
+from pages.login_page import LoginPage
 from pages.product_page import ProductPage
 from pages.locators import ProductPageLocators
 
@@ -8,6 +9,7 @@ product_links = [f"{base_link}/?promo=offer{i}" for i in [0, 1, 2, 3, 4, 5, 6, 8
 bugged_link = [pytest.param(f"{base_link}/?promo=offer7", marks=pytest.mark.xfail)]
 product_links += bugged_link
 
+@pytest.mark.skip
 @pytest.mark.parametrize('product_link', product_links)
 def test_guest_can_add_product_to_basket(browser, product_link):
     #product_link = ProductPageLocators.PRODUCT_LINK
@@ -43,7 +45,19 @@ def test_message_disappeared_after_adding_product_to_basket (browser):
     product_page.solve_quiz_and_get_code()
     product_page.should_be_success_message_is_disappeared()
 
+def test_guest_should_see_login_link_on_product_page(browser):
+    product_link = ProductPageLocators.PRODUCT_LINK
+    product_page = ProductPage(browser, product_link)
+    product_page.open()
+    product_page.should_be_login_link()
     
+def test_guest_can_go_to_login_page_from_product_page(browser):
+    product_link = ProductPageLocators.PRODUCT_LINK
+    product_page = ProductPage(browser, product_link)
+    product_page.open()
+    product_page.go_to_login_page()
+    login_page = LoginPage(browser, browser.current_url)
+    login_page.should_be_login_url()
     
     
     
