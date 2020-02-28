@@ -1,12 +1,18 @@
 from selenium.webdriver.common.by import By
 
 class BasePageLocators():
+    LINK = "http://selenium1py.pythonanywhere.com/"
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
     LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
-    LINK = "http://selenium1py.pythonanywhere.com/"
+    GO_TO_BASKET_BUTTON = (By.CSS_SELECTOR, ".btn-group")
+
+class BasketPageLocators():
+    EMPTY_BASKET_MESSAGE = (By.CSS_SELECTOR, '#messages[style="visibility: visible;"]')
+    BASKET_ITEMS = (By.CSS_SELECTOR, ".basket-items")
 
 class MainPageLocators():
     LINK = "http://selenium1py.pythonanywhere.com/"
+
 
 class LoginPageLocators():
     LOGIN_FORM = (By.ID, "login_form")

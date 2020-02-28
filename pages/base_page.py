@@ -11,10 +11,15 @@ class BasePage():
         self.browser = browser
         self.url = url
         self.browser.implicitly_wait(timeout)
-        
-    def open(self):
-        self.browser.get(self.url)
-                                       
+
+    def go_to_basket(self):
+            basket_button = self.browser.find_element(*BasePageLocators.GO_TO_BASKET_BUTTON)
+            basket_button.click()
+
+    def go_to_login_page(self):
+        login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
+        login_link.click()
+               
     def is_element_present(self, selector, selector_request):
         try:
             self.browser.find_element(selector, selector_request)
@@ -22,21 +27,6 @@ class BasePage():
             return False
         return True
     
-    def is_not_element_present(self, selector, selector_request, timeout=4):
-        try:
-            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((selector, selector_request)))
-        except TimeoutException:
-            return True
-        return False
-        
-    def go_to_login_page(self):
-        login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
-        login_link.click()
-                                       
-    def should_be_login_link(self):
-        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), \
-                                       "Login link is not presented"
-                                       
     def is_disappeared(self, selector, selector_request, timeout=4):
         try:
             WebDriverWait(self.browser, timeout, 1, TimeoutException).until_not(EC.presence_of_element_located((selector, selector_request)))
@@ -47,7 +37,21 @@ class BasePage():
     def is_element_correct_message(self, selector, selector_request, message):
         assert (self.browser.find_element(selector, selector_request).text == message), \
                                             f"Element '{message}' not presented in alert"
-                                    
+                                            
+    def is_not_element_present(self, selector, selector_request, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((selector, selector_request)))
+        except TimeoutException:
+            return True
+        return False
+        
+    def open(self):
+        self.browser.get(self.url)
+                             
+    def should_be_login_link(self):
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), \
+                                       "Login link is not presented"
+                                       
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]

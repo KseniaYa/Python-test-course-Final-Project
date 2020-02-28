@@ -2,6 +2,7 @@ import pytest
 
 from pages.login_page import LoginPage
 from pages.product_page import ProductPage
+from pages.basket_page import BasketPage
 from pages.locators import ProductPageLocators
 
 base_link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207"
@@ -9,7 +10,6 @@ product_links = [f"{base_link}/?promo=offer{i}" for i in [0, 1, 2, 3, 4, 5, 6, 8
 bugged_link = [pytest.param(f"{base_link}/?promo=offer7", marks=pytest.mark.xfail)]
 product_links += bugged_link
 
-@pytest.mark.skip
 @pytest.mark.parametrize('product_link', product_links)
 def test_guest_can_add_product_to_basket(browser, product_link):
     #product_link = ProductPageLocators.PRODUCT_LINK
@@ -59,7 +59,14 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
     login_page = LoginPage(browser, browser.current_url)
     login_page.should_be_login_url()
     
-    
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+    product_link = ProductPageLocators.PRODUCT_LINK
+    product_page = ProductPage(browser, product_link)
+    product_page.open()
+    product_page.go_to_basket()
+    basket_page = BasketPage(browser, browser.current_url)
+    basket_page.basket_is_empty()
+    basket_page.should_be_message_basket_is_empty()
     
     
     
