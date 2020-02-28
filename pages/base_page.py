@@ -18,7 +18,7 @@ class BasePage():
         return True
     
     def is_element_correct_message(self, selector, selector_request, message):
-        assert (self.browser.find_element(selector, selector_request).text.find(message) != -1), \
+        assert (self.browser.find_element(selector, selector_request).text == message), \
                                             f"Element '{message}' not presented in page"
                                     
     def solve_quiz_and_get_code(self):

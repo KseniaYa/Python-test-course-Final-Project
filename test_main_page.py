@@ -2,8 +2,6 @@ from pages.main_page import MainPage
 from pages.login_page import LoginPage
 from pages.locators import MainPageLocators
 
-
-
 def test_guest_can_go_to_login_page(browser):
     link = MainPageLocators.LINK
     page = MainPage(browser, link)
