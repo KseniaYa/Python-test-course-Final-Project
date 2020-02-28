@@ -13,5 +13,9 @@ class ProductPage(BasePage):
                                         
     def should_be_message_add_to_basket_success_product_cost_is_correct(self):
         self.is_element_correct_message(*ProductPageLocators.ADD_PRODUCT_COST_SUCCESS,self.product_cost)
+        
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.ALERT_SUCCESS), \
+                                            "Success message is presented, but should not be"
                                         
                                         

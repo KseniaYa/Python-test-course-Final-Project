@@ -13,9 +13,9 @@ def test_guest_can_add_product_to_basket(browser, product_link):
     #product_link = ProductPageLocators.PRODUCT_LINK
     product_page = ProductPage(browser, product_link)
     product_page.open()
+    product_page.should_not_be_success_message()
     product_page.add_to_basket()
     product_page.solve_quiz_and_get_code()
-    
     product_page.should_be_message_add_to_basket_success_product_name_is_correct()
     product_page.should_be_message_add_to_basket_success_product_cost_is_correct()
     

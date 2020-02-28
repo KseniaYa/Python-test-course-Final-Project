@@ -1,5 +1,9 @@
 import math
-from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoAlertPresentException
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class BasePage():
     def __init__(self, browser, url, timeout=10):
@@ -17,9 +21,16 @@ class BasePage():
             return False
         return True
     
+    def is_not_element_present(self, selector, selector_request, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((selector, selector_request)))
+        except TimeoutException:
+            return True
+        return False
+    
     def is_element_correct_message(self, selector, selector_request, message):
         assert (self.browser.find_element(selector, selector_request).text == message), \
-                                            f"Element '{message}' not presented in page"
+                                            f"Element '{message}' not presented in alert"
                                     
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
