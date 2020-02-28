@@ -27,7 +27,14 @@ class BasePage():
         except TimeoutException:
             return True
         return False
-    
+
+    def is_disappeared(self, selector, selector_request, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException).until_not(EC.presence_of_element_located((selector, selector_request)))
+        except TimeoutException:
+            return False
+        return True
+
     def is_element_correct_message(self, selector, selector_request, message):
         assert (self.browser.find_element(selector, selector_request).text == message), \
                                             f"Element '{message}' not presented in alert"
