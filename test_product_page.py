@@ -12,6 +12,7 @@ product_links = [f"{base_link}/?promo=offer{i}" for i in [0, 1, 2, 3, 4, 5, 6, 8
 bugged_link = [pytest.param(f"{base_link}/?promo=offer7", marks=pytest.mark.xfail)]
 product_links += bugged_link
 
+@pytest.mark.need_review
 @pytest.mark.parametrize('product_link', product_links)
 def test_guest_can_add_product_to_basket(browser, product_link):
     #product_link = ProductPageLocators.PRODUCT_LINK
@@ -53,6 +54,7 @@ def test_guest_should_see_login_link_on_product_page(browser):
     product_page.open()
     product_page.should_be_login_link()
     
+@pytest.mark.need_review
 def test_guest_can_go_to_login_page_from_product_page(browser):
     product_link = ProductPageLocators.PRODUCT_LINK
     product_page = ProductPage(browser, product_link)
@@ -61,6 +63,7 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
     login_page = LoginPage(browser, browser.current_url)
     login_page.should_be_login_url()
     
+@pytest.mark.need_review
 def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     product_link = ProductPageLocators.PRODUCT_LINK
     product_page = ProductPage(browser, product_link)
@@ -88,6 +91,7 @@ class TestUserAddToBasketFromProductPage():
         product_page.open()
         product_page.should_not_be_success_message()
         
+    @pytest.mark.need_review
     def test_user_can_add_product_to_basket(self, browser):
         product_link = ProductPageLocators.PRODUCT_LINK
         product_page = ProductPage(browser, product_link)
